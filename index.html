@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab CPO Pro - Pedoman Pemula</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#f0f4f0;padding:10px;max-width:440px;margin:auto}
+.card{background:white;border-radius:14px;padding:16px;box-shadow:0 3px 12px rgba(0,0,0,0.12)}
+h2{color:#2E7D32;text-align:center;font-size:18px}
+.sub{font-size:10px;color:#888;text-align:center;margin:4px 0 12px}
+.tabs{display:flex;gap:4px;background:#e8f5e9;padding:4px;border-radius:25px;margin-bottom:14px}
+.tab{flex:1;padding:10px 5px;border:none;border-radius:20px;font-size:11px;font-weight:bold;cursor:pointer;background:transparent;color:#2E7D32}
+.tab.active{background:#2E7D32;color:white}
+.tab-content{display:none}
+.tab-content.active{display:block}
+label{font-weight:bold;font-size:11px;margin-top:10px;display:block}
+input{width:100%;padding:10px;margin-top:4px;border:1px solid #ccc;border-radius:8px;font-size:14px;box-sizing:border-box}
+.btn{width:100%;background:#2E7D32;color:white;padding:12px;border:none;border-radius:8px;margin-top:12px;font-weight:bold;font-size:14px}
+.result{background:#e8f5e9;border-left:5px solid #2E7D32;border-radius:8px;padding:12px;margin-top:12px;display:none;text-align:center}
+.pedoman{background:#e3f2fd;border-left:5px solid #1976D2;border-radius:8px;padding:10px;margin-bottom:12px;font-size:11px;line-height:1.5}
+.pedoman b{color:#1976D2}
+.pedoman ol{margin-left:15px;margin-top:4px}
+.spec{background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:8px;margin-top:8px;font-size:10px;color:#555}
+.footer{text-align:center;font-size:10px;color:#999;margin-top:16px}
+</style>
+</head>
+<body>
+<div class="card">
+<h2> Lab CPO Pro - Pemula</h2>
+<div class="sub">FFA | DIRT | BLEND + Pedoman - by Kevin Afsar</div>
+
+<div class="tabs">
+<button class="tab active" id="t-ffa" onclick="openTab('ffa')">FFA</button>
+<button class="tab" id="t-dirt" onclick="openTab('dirt')">DIRT</button>
+<button class="tab" id="t-blend" onclick="openTab('blend')">BLEND</button>
+<button class="tab" id="t-pedoman" onclick="openTab('pedoman')">PANDUAN</button>
+</div>
+
+<!-- FFA -->
+<div id="ffa" class="tab-content active">
+<div class="pedoman">
+<b> PEDOMAN FFA (Free Fatty Acid)</b>
+<ol>
+<li>Timbang CPO <b>5 gram</b> ke erlenmeyer</li>
+<li>Tambah alkohol netral 50ml, panaskan 60°C</li>
+<li>Teteskan PP 3 tetes</li>
+<li>Titrasi dengan NaOH 0.1N sampai pink 30 detik</li>
+<li>Catat Vol NaOH yang kepakai</li>
+</ol>
+Rumus: (Vol x N x 25.6) / Berat Sampel
+</div>
+<label>Berat Sampel (g)</label><input id="w" value="5.00" type="number" step="0.01">
+<label>Vol NaOH Habis (ml)</label><input id="v" value="2.30" type="number" step="0.01">
+<label>Normalitas NaOH</label><input id="n" value="0.1" type="number" step="0.01">
+<button class="btn" onclick="hitungFFA()">HITUNG FFA</button>
+<div id="rFFA" class="result"></div>
+<div class="spec">SPEC BUYER: FFA &lt;5% Lolos, &gt;5% Tinggi / Potong Harga. Target PKS Melak: 3.5 - 4.5%</div>
+</div>
+
+<!-- DIRT -->
+<div id="dirt" class="tab-content">
+<div class="pedoman">
+<b> PEDOMAN DIRT (Kotoran)</b>
+<ol>
+<li>Timbang kertas saring kosong, catat (K0)</li>
+<li>Timbang CPO <b>20 gram</b></li>
+<li>Larutkan dengan hexane / bensin 100ml</li>
+<li>Saring pakai kertas saring yang sudah ditimbang</li>
+<li>Cuci dengan hexane sampai bersih</li>
+<li>Oven kertas 105°C 1 jam</li>
+<li>Timbang kertas + kotoran (K1)</li>
+</ol>
+Rumus: (K1-K0)/Sampel x 100%
+</div>
+<label>Berat Sampel CPO (g)</label><input id="s" value="20.00" type="number" step="0.01">
+<label>Kertas Saring Kosong (g) - K0</label><input id="k0" value="1.2000" type="number" step="0.0001">
+<label>Kertas + Dirt (g) - K1</label><input id="k1" value="1.2055" type="number" step="0.0001">
+<button class="btn" onclick="hitungDirt()">HITUNG DIRT</button>
+<div id="rDirt" class="result"></div>
+<div class="spec">SPEC: &lt;0.02% Lolos  | 0.02-0.04% Waspada  | &gt;0.04% Tolak / Bongkar Press </div>
+</div>
+
+<!-- BLEND -->
+<div id="blend" class="tab-content">
+<div class="pedoman">
+<b> PEDOMAN BLENDING CPO</b>
+Dipakai kalau ada 2 tangki FFA beda, mau dicampur biar masuk spec buyer.<br>
+<ol>
+<li>Cek FFA Tangki A (rendah) dan B (tinggi)</li>
+<li>Tentukan Target FFA buyer (misal 4.2%)</li>
+<li>Hitung butuh berapa Kg dari masing-masing tangki</li>
+</ol>
+<b>Tips:</b> Target harus diantara FFA A dan B!
+</div>
+<label>FFA Tangki A % (Rendah)</label><input id="fa" value="3.54" type="number" step="0.01">
+<label>Stock Tangki A Kg</label><input id="ka" value="1000" type="number">
+<label>FFA Tangki B % (Tinggi)</label><input id="fb" value="5.37" type="number" step="0.01">
+<label>Stock Tangki B Kg</label><input id="kb" value="3000" type="number">
+<div style="background:#fffde7;border:2px solid #f9a825;border-radius:8px;padding:10px;margin-top:10px">
+<label>Target FFA Buyer %</label><input id="ft" value="4.20" type="number" step="0.01">
+<label>Butuh Total Berapa Kg?</label><input id="kg" value="250" type="number">
+</div>
+<button class="btn" onclick="hitungBlend()">HITUNG BLEND FFA</button>
+<div id="rBlend" class="result"></div>
+</div>
+
+<!-- PANDUAN UMUM -->
+<div id="pedoman" class="tab-content">
+<div class="pedoman">
+<b> PANDUAN LENGKAP PEMULA LAB CPO</b><br><br>
+<b>1. ALAT YANG DIBUTUHKAN:</b><br>
+- Timbangan analitik 0.0001g<br>
+- Erlenmeyer, buret, gelas ukur<br>
+- Oven, kertas saring, hexane<br>
+- NaOH 0.1N, alkohol, indikator PP<br><br>
+
+<b>2. URUTAN KERJA HARIAN:</b><br>
+07.00: Ambil sampel CPO dari produksi<br>
+07.30: Timbang & Titrasi FFA<br>
+08.30: Saring Dirt<br>
+09.30: Catat hasil & lapor ke Asisten Lab<br><br>
+
+<b>3. CATATAN PENTING:</b><br>
+- FFA naik = buah restan / terlambat olah<br>
+- Dirt tinggi = press bocor / saringan jebol<br>
+- Moist cek di mesin analyzer (bukan oven)<br>
+- Selalu pakai APD: sarung tangan & kacamata<br><br>
+
+<b>4. KONTAK:</b><br>
+Lab CPO Melak - Kevin Afsar<br>
+082272361628
+</div>
+</div>
+
+<div class="footer">powered by Kevin afsar - Melak - Kutai Barat</div>
+</div>
+
+<script>
+function openTab(id){
+  document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(e=>e.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('t-'+id).classList.add('active');
+}
+function hitungFFA(){
+  let w=parseFloat(document.getElementById('w').value);
+  let v=parseFloat(document.getElementById('v').value);
+  let n=parseFloat(document.getElementById('n').value);
+  let ffa=(v*n*25.6)/w;
+  let el=document.getElementById('rFFA');
+  el.style.display='block';
+  el.innerHTML='<div style="font-size:28px;color:#2E7D32"><b>'+ffa.toFixed(2)+'%</b></div>FFA<br>'+(ffa<5?'<span style="color:green;font-weight:bold">LOLOS  - Masuk Spec</span>':'<span style="color:red;font-weight:bold">TINGGI  - Potong Harga</span>')+'<br><br><small style="font-size:10px">Vol NaOH '+v+'ml x N '+n+' x 25.6 / '+w+'g</small>';
+}
+function hitungDirt(){
+  let s=parseFloat(document.getElementById('s').value);
+  let k0=parseFloat(document.getElementById('k0').value);
+  let k1=parseFloat(document.getElementById('k1').value);
+  let dirt=((k1-k0)/s)*100;
+  let st=dirt<0.02?'<span style="color:green;font-weight:bold">LOLOS </span>':dirt<0.04?'<span style="color:orange;font-weight:bold">WASPADA  - Cek Saringan</span>':'<span style="color:red;font-weight:bold">TOLAK  - Press Bocor</span>';
+  let el=document.getElementById('rDirt');
+  el.style.display='block';
+  el.innerHTML='<div style="font-size:28px;color:#2E7D32"><b>'+dirt.toFixed(4)+'%</b></div>'+st+'<br><small>Berat Dirt '+(k1-k0).toFixed(4)+'g dari '+s+'g CPO</small>';
+}
+function hitungBlend(){
+  let fa=parseFloat(document.getElementById('fa').value);
+  let fb=parseFloat(document.getElementById('fb').value);
+  let ft=parseFloat(document.getElementById('ft').value);
+  let kg=parseFloat(document.getElementById('kg').value);
+  let pA=(fb-ft)/(fb-fa);
+  if(pA<0||pA>1){alert("Target FFA harus diantara FFA A ("+fa+"%) dan B ("+fb+"%) Pak!");return;}
+  let needA=kg*pA;
+  let needB=kg-needA;
+  let el=document.getElementById('rBlend');
+  el.style.display='block';
+  el.innerHTML='<b>Untuk dapat '+kg+' Kg FFA '+ft+'%</b><br><br> Ambil Tangki A ('+fa+'%): <b style="font-size:18px;color:#2E7D32">'+needA.toFixed(1)+' Kg</b><br> Ambil Tangki B ('+fb+'%): <b style="font-size:18px;color:#2E7D32">'+needB.toFixed(1)+' Kg</b><br><br><small>Rumus: Proporsi A = (FB-FT)/(FB-FA)</small>';
+}
+</script>
+</body>
+</html>
